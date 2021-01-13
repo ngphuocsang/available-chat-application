@@ -1,0 +1,36 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/libraries/MyLibrary/**",
+                "${workspaceFolder}/libraries/MyLibrary/Models/**",
+                "${workspaceFolder}/libraries/MyLibrary/UserInterfaces/**",
+                "${workspaceFolder}/libraries/MyLibrary/RestAPI/**",
+                "${workspaceFolder}/source/Server/**",
+                "${workspaceFolder}/source/Server/Database/**",
+                "${workspaceFolder}/source/Server/ChatServer/Headers/**",
+                "${workspaceFolder}/source/Server/RestServer/**",
+                "${workspaceFolder}/source/Server/RestServer/Controllers/**",
+                "${workspaceFolder}/source/Server/RestServer/Services/**",
+                "${workspaceFolder}/source/Client/**",
+                "${workspaceFolder}/source/Client/ChatApp/**",
+                "${workspaceFolder}/source/Client/Text/**",
+                "${workspaceFolder}/source/Client/UI/**",
+                "${workspaceFolder}/test/**",
+                "${workspaceFolder}/test/Primary/**",
+                "${workspaceFolder}/test/Services/**",
+                "${workspaceFolder}/test/CallingAPIs/**",
+                "${workspaceFolder}/test/StressTest/**"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "clang-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}

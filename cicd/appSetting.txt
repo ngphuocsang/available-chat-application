@@ -1,0 +1,8 @@
+ServerIP=0.0.0.0
+RestServPort=8080
+ChatServPort=8888
+DefaultTimeout=300
+MySqlServIP=acadbservice
+MySqlServUser=acauser
+MySqlServDbname=acadb
+MySqlServPass=acapasswd

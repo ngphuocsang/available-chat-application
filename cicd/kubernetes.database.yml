@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: acaserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acadbdeployment
+  namespace: acaserver
+  labels:
+    app: acadbdeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acadbdeployment
+  template:
+    metadata:
+      labels:
+        app: acadbdeployment
+    spec:
+      containers:
+      - name: acadbcontainer
+        image: localhost:32000/acadbservice:registry
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: acadb
+        - name: MYSQL_PASSWORD
+          value: acapasswd
+        - name: MYSQL_USER
+          value: acauser
+        ports:
+        - containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acadbservice
+  namespace: acaserver
+spec:
+  type: ClusterIP
+  selector:
+    app: acadbdeployment
+  ports:
+  - port: 3306
+    targetPort: 3306

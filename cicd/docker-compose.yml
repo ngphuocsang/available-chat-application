@@ -1,0 +1,53 @@
+version: "3.3"
+services:
+  baseserv:
+    build: 
+      context: .
+      dockerfile: Dockerfile.baseserv
+    image: baseserv:latest
+    container_name: cbaseserv
+    
+  chatservservice:
+    build:
+      context: ../
+      dockerfile: ./cicd/Dockerfile.chatserv
+    image: chatservservice:latest
+    container_name: chatservservice
+    depends_on:
+      - "acadbservice"
+    restart: always
+    tty: true
+    ports:
+      - 8888:8888
+
+  restservservice:
+    build:
+      context: ../
+      dockerfile: ./cicd/Dockerfile.restserv
+    image: restservservice:latest
+    container_name: restservservice
+    depends_on:
+      - "acadbservice"
+    restart: always
+    tty: true
+    ports:
+      - 8080:8080
+
+  acadbservice:
+    build:
+      context: .
+      dockerfile: Dockerfile.database
+    image: acadbservice:latest
+    container_name: acadbservice
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: acadb
+      MYSQL_PASSWORD: acapasswd
+      MYSQL_USER: acauser
+    volumes:
+      - mysqldata:/var/lib/mysql
+
+volumes:
+  mysqldata:

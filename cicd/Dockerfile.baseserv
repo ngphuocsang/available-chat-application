@@ -1,0 +1,7 @@
+FROM ubuntu:18.04
+RUN apt update && apt upgrade -y && \
+apt install cmake ninja-build build-essential -y && \
+apt install libcpprest-dev libcrypto++-dev libmysqlclient-dev libgtest-dev qt5-default -y && \
+cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
+
+CMD ["/bin/bash"]

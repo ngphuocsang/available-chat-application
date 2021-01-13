@@ -1,0 +1,3 @@
+FROM mysql:5.7.31
+COPY aca-db-script.sql /docker-entrypoint-initdb.d
+CMD ["mysqld"]

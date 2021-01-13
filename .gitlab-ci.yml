@@ -1,0 +1,102 @@
+cache:
+  key: build-cache
+  paths:
+    - build/
+
+stages:
+  - build
+  - test
+  - deploy
+
+b_server_auto:
+  tags:
+    - runner
+  stage: build
+  script:
+    - sudo bash ./cicd/build_server.sh
+  only:
+    - merge_requests
+
+b_server_manual:
+  tags:
+    - runner
+  stage: build
+  script:
+    - sudo bash ./cicd/build_server.sh
+  when: manual
+  only:
+    - master
+
+t_primary_auto:
+  tags:
+    - runner
+  stage: test
+  script:
+    - sudo bash ./cicd/test_primary.sh
+  dependencies:
+    - b_server_auto
+  only:
+    - merge_requests
+
+t_primary_manual:
+  tags:
+    - runner
+  stage: test
+  script:
+    - sudo bash ./cicd/test_primary.sh
+  dependencies:
+    - b_server_manual
+  when: manual
+  only:
+    - master
+
+t_secondary_manual:
+  tags:
+    - runner
+  stage: test
+  script:
+    - sudo bash ./cicd/test_secondary.sh
+  dependencies:
+    - b_server_manual
+    - b_server_auto
+  when: manual
+  only:
+    - master
+    - merge_requests
+    
+d_docker_auto:
+  tags:
+    - runner
+  stage: deploy
+  script:
+    - cd cicd
+    - bash ./docker-compose-build.sh
+  dependencies:
+    - t_primary_auto
+  only:
+    - merge_requests
+
+d_docker_manual:
+  tags:
+    - runner
+  stage: deploy
+  script:
+    - cd cicd
+    - bash ./docker-compose-build.sh
+  dependencies:
+    - t_primary_manual
+  when: manual
+  only:
+    - master
+    
+d_k8s_manual:
+  tags:
+    - runner
+  stage: deploy
+  script:
+    - cd cicd
+    - bash ./kubernetes-deploy.sh
+  when: manual
+  only:
+    - master
+    - merge_requests

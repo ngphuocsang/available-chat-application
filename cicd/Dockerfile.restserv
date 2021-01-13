@@ -1,0 +1,8 @@
+FROM baseserv
+RUN mkdir /var/rest-serv
+WORKDIR /var/rest-serv
+COPY ./ ./
+RUN rm build -R -f && mkdir build && cd build && cmake .. &&\
+cmake --build $(pwd) --config Release --target ACA-RestServer -- -j 6
+COPY ./cicd/appSetting.txt ./build/source/Server
+CMD ["/var/rest-serv/build/source/Server/ACA-RestServer"]

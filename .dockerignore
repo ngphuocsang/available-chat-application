@@ -1,0 +1,9 @@
+.vscode
+build
+cicd/*
+!cicd/appSetting.txt
+.git
+.dockerignore
+.gitignore
+.gitlab-ci.yml
+config.toml
